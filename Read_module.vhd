@@ -19,7 +19,7 @@ architecture RTL of Read_module is
     signal r_counter : integer := 0;
     signal r_reset : std_logic := '0';
     -- Trigger:
-    signal r_Trig_en : std_logic := '0'; --?
+    signal r_Trig_en : std_logic := '0'; 
     -- Echo:
     signal r_distance : integer := 0;
     -- ASCII:
@@ -39,9 +39,9 @@ begin
         if (rising_edge(i_clk)) then
             case trenutno is
                 when Trigger =>  
-                    r_data_avail <= '0'; -- redundandno
+                    r_data_avail <= '0'; 
                     r_reset <= '0';
-                    if (r_counter < 2) then -- Mozda nepotrebno
+                    if (r_counter < 2) then 
                         r_Trig_en <= '0';
                         r_counter <= r_counter + 1;
                         trenutno <= Trigger;
@@ -82,7 +82,7 @@ begin
                             r_desetica <= (r_distance/10) rem 10;
                             r_jedinica <= r_distance rem 10;
                     end case;
-                    if (r_counter < 100) then -- Mozda nepotrebno
+                    if (r_counter < 100) then 
                         trenutno <= Cifre;
                         r_counter <= r_counter + 1;
                     else
@@ -115,7 +115,7 @@ begin
 
                     case r_desetica is
                         when 0 =>
-                            r_ascii_data_buff (15 downto 8) <= x"00"; -- x"30" da si posten     
+                            r_ascii_data_buff (15 downto 8) <= x"00";     
                         when 1 =>
                             r_ascii_data_buff (15 downto 8) <= x"31";
                         when 2 =>
@@ -159,7 +159,7 @@ begin
                             r_ascii_data_buff (23 downto 16) <= x"39";
                     end case;
 
-                    if (r_counter < 100) then -- Mozda nepotrebno
+                    if (r_counter < 100) then 
                         trenutno <= ASCII;
                         r_counter <= r_counter + 1;
                     else
@@ -172,10 +172,9 @@ begin
                     if (r_reset = '1') then
                         trenutno <= Trigger;
                         r_counter <= 0;
-                        r_data_avail <= '0'; -- redundantno? 
+                        r_data_avail <= '0'; 
                     else
                         trenutno <= Transmit;
-                        -- Ovde ga vrati u 1, ne valja
                     end if;
                     
                     if (r_done = '1') then
@@ -246,8 +245,6 @@ begin
                             r_ascii_data <= (others => '0'); -- NULL
                         end if;
                     end if;
-                -- when Reset => 
-                -- when Novi_red =>
             end case;
         end if;
     end process;
