@@ -11,8 +11,8 @@ entity UART_TX is
         i_data_byte: in std_logic_vector(7 downto 0);
         i_data_avail: in std_logic;
         --indikatorski izlazli:
-        o_active: out std_logic; --LED na plocici
-        o_done: out std_logic; --LED na plocici
+        o_active: out std_logic; 
+        o_done: out std_logic; 
         -- izlazni podatak:
         o_Tx: out std_logic
     );
@@ -84,13 +84,5 @@ begin
             end case;
         end if;
     end process;
-    o_Tx <= r_Tx;
-   -- send_data <= '1' when 
+    o_Tx <= r_Tx; 
 end RTL;    
-                    
-                
--- upon receving the byte from i_data_byte the data_avail goes HIGH
--- we wait for the falling edge of the data_avail, indicating the data is to be ignored
--- as a result, the active pin goes HIGH
--- active meaning that the valid data is being forwoarded to the o_Tx
--- o_active <= not o_done
